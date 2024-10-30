@@ -7,6 +7,5 @@ contractions
 stopwords
 word_tokenize
 Counter
-xgboost
 LogisticRegression
 TfidfVectorizer
