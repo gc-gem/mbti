@@ -58,18 +58,23 @@ def preprocess_text(text):
     # Join tokens back to string
     clean_text = " ".join(tokens)
 
-    # Vectorize the cleaned text
-    tfidf_vect = tfidf_vect_ngram.transform([clean_text])
-    return tfidf_vect
+    return clean_text
 
 # Function to make prediction
 def predict_mbti(text):
-    ie_pred = xgb_ie_model.predict([text])
-    ns_pred = xgb_ns_model.predict([text])
-    tf_pred = logreg_tf_model.predict([text])
-    jp_pred = logreg_jp_model.predict([text])
+    # Preprocess the input text
+    clean_text = preprocess_text(text)
 
-    mbti_type = f"{'I' if ie_pred == 0 else 'E'}{'N' if ns_pred == 0 else 'S'}{'T' if tf_pred == 0 else 'F'}{'J' if jp_pred == 0 else 'P'}"
+    # Vectorize the cleaned text
+    tfidf_features = tfidf_vect_ngram.transform([clean_text])
+
+    # Make predictions
+    ie_pred = xgb_ie_model.predict(tfidf_features)
+    ns_pred = xgb_ns_model.predict(tfidf_features)
+    tf_pred = logreg_tf_model.predict(tfidf_features)
+    jp_pred = logreg_jp_model.predict(tfidf_features)
+
+    mbti_type = f"{'I' if ie_pred[0] == 0 else 'E'}{'N' if ns_pred[0] == 0 else 'S'}{'T' if tf_pred[0] == 0 else 'F'}{'J' if jp_pred[0] == 0 else 'P'}"
     return mbti_type
 
 # Streamlit UI
@@ -85,10 +90,8 @@ input_text = st.text_area("Enter your text:")
 # Button for triggering sentiment analysis
 if st.button('Analyze'):
     if input_text.strip():
-        # Preprocess user input
-        features = preprocess_text(input_text)
         # Make prediction
-        prediction = predict_mbti(features)
+        prediction = predict_mbti(input_text)
         st.write(f"**MBTI Personality Type Prediction is:** {prediction}")
     else:
         st.write("Please try again.")
