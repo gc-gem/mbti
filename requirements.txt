@@ -9,3 +9,4 @@ word_tokenize
 Counter
 LogisticRegression
 TfidfVectorizer
+xgboost
