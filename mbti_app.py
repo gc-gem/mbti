@@ -5,11 +5,20 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from xgboost import XGBClassifier
 from sklearn.linear_model import LogisticRegression
+import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
 import contractions
 import re
+
+# Download stopwords if they aren't already downloaded
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+
+stop_words = set(stopwords.words('english'))
 
 # Load models
 tfidf_vect_ngram = joblib.load('tfidf_vect_ngram.pkl')
@@ -17,8 +26,6 @@ xgb_ie_model = joblib.load('xgb_ie_model.pkl')
 xgb_ns_model = joblib.load('xgb_ns_model.pkl')
 logreg_tf_model = joblib.load('logreg_tf_model.pkl')
 logreg_jp_model = joblib.load('logreg_jp_model.pkl')
-
-stop_words = set(stopwords.words('english'))
 
 # Function to preprocess text input
 def preprocess_text(text):
