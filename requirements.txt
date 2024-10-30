@@ -2,3 +2,8 @@ joblib
 streamlit
 scikit-learn
 xgboost
+collections
+nltk.corpus
+nltk.tokenize
+re
+contractions
