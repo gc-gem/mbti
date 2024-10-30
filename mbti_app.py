@@ -3,6 +3,9 @@ import pandas as pd
 import joblib
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
+from xgboost import XGBClassifier
+from sklearn.linear_model import LogisticRegression
+
 
 # Load models
 tfidf_vect_ngram = joblib.load('tfidf_vect_ngram.pkl')
