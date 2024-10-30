@@ -1,3 +1,12 @@
 joblib
 streamlit
 scikit-learn
+string
+re
+contractions
+stopwords
+word_tokenize
+Counter
+xgboost
+LogisticRegression
+TfidfVectorizer

@@ -5,7 +5,10 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from xgboost import XGBClassifier
 from sklearn.linear_model import LogisticRegression
-
+import contractions
+import re
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 # Load models
 tfidf_vect_ngram = joblib.load('tfidf_vect_ngram.pkl')
@@ -14,9 +17,36 @@ xgb_ns_model = joblib.load('xgb_ns_model.pkl')
 logreg_tf_model = joblib.load('logreg_tf_model.pkl')
 logreg_jp_model = joblib.load('logreg_jp_model.pkl')
 
+stop_words = set(stopwords.words('english'))
+
 # Function to preprocess text input
 def preprocess_text(text):
-    tfidf_vect = tfidf_vect_ngram.transform([text])
+    # Extend contractions
+    text = contractions.fix(text)
+
+    # Substitute repeated characters (3 or more)
+    text = re.sub(r'(.)\1{2,}', r'\1', text)
+
+    # Remove pipes
+    text = re.sub(r'\|+', ' ', text)
+
+    # Remove special characters, digits, and punctuation except exclamation marks
+    text = re.sub(r'[^a-zA-Z\s!]', '', text)
+
+    # Lowercase all text
+    text = text.lower()
+
+    # Tokenize the text
+    tokens = word_tokenize(text)
+
+    # Remove stopwords
+    tokens = [word for word in tokens if word not in stop_words]
+
+    # Join tokens back to string
+    clean_text = " ".join(tokens)
+
+    # Vectorize the cleaned text
+    tfidf_vect = tfidf_vect_ngram.transform([clean_text])
     return tfidf_vect
 
 # Function to make prediction
@@ -31,7 +61,7 @@ def predict_mbti(text):
 
 # Streamlit UI
 st.markdown(
-    '<h1 style="color: orange;">IOD Data Science and AI: Capstone Project</h1>',
+    '<h1 style="color: blue;">IOD Data Science and AI: Capstone Project</h1>',
     unsafe_allow_html=True
 )
 st.write("**Deployed By:** Gemma Cullen")
