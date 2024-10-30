@@ -88,7 +88,7 @@ if st.button('Analyze'):
         # Preprocess user input
         features = preprocess_text(input_text)
         # Make prediction
-        prediction = predict_mbti.predict(features)
+        prediction = predict_mbti(features)
         st.write(f"**MBTI Personality Type Prediction is:** {prediction}")
     else:
         st.write("Please try again.")
