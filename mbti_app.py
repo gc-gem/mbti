@@ -115,9 +115,29 @@ mbti_descriptions = {
 
 # Streamlit UI
 st.markdown(
-    '<h1 style="color: blue;">Capstone Project:</br>Typed by Text:</br>Leveraging text to predict personality type</h1>', unsafe_allow_html=True
+    """
+    <style>
+        .header {
+            color: #4a90e2;  /* A softer blue color */
+            text-align: center;
+            padding: 20px;
+            border-bottom: 2px solid #4a90e2; /* Underline for emphasis */
+            font-family: 'Arial', sans-serif; /* Change font for better readability */
+        }
+        .deployed-by {
+            text-align: center;
+            font-size: 1.2em;
+            color: #333; /* Darker color for contrast */
+            margin-top: 10px;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+    <h1 class="header">Capstone Project:<br>Typed by Text:<br>Leveraging text to predict personality type</h1>
+    """,
+    unsafe_allow_html=True
 )
-st.write("**Deployed By:** Gemma Cullen")
+
+st.markdown('<div class="deployed-by">**Deployed By:** Gemma Cullen</div>', unsafe_allow_html=True)
 
 st.title('MBTI Personality Type Prediction')
 input_text = st.text_area("Enter your text:")
