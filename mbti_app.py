@@ -132,12 +132,12 @@ st.markdown(
             font-family: 'Arial', sans-serif;
         }
     </style>
-    <h1 class="header">Capstone Project:<br>Typed by Text:<br>Leveraging text to predict personality type</h1>
+    <h1 class="header">Typed by Text:<br>Leveraging text to predict personality type</h1>
     """,
     unsafe_allow_html=True
 )
 
-st.markdown('<div class="deployed-by">**Deployed By:** Gemma Cullen</div>', unsafe_allow_html=True)
+st.markdown('<div class="deployed-by">Deployed By: Gemma Cullen</div>', unsafe_allow_html=True)
 
 st.title('MBTI Personality Type Prediction')
 input_text = st.text_area("Enter your text:")
